@@ -27,12 +27,23 @@ jobs:
     - name: Deploy and Run FastAPI
       run: |
         ssh -o StrictHostKeyChecking=no gerardo@jquiroz.net << 'EOF'
+          # 1. Sitúate en la carpeta que contiene 'app/'
           cd /home/gerardo/DespliegueContinuo/productos-fastapi/productos-fastapi
+
+          # 2. Actualiza código
           git pull origin master
 
+          # 3. Activa entorno virtual
           source /home/gerardo/productos-api/entorno/bin/activate
+
+          # 4. Instala dependencias
           pip install -r requirements.txt || pip install fastapi uvicorn
 
+          # 5. Mata cualquier proceso en el puerto 3013
           fuser -k 3013/tcp || true
-          nohup /home/gerardo/productos-api/entorno/bin/uvicorn app.main:app --host 0.0.0.0 --port 3013 > fastapi.log 2>&1 &
+
+          # 6. Arranca Uvicorn desde el nivel raíz del proyecto, 
+          #    usando import absoluto de tu paquete 'app'
+          nohup /home/gerardo/productos-api/entorno/bin/uvicorn app.main:app \
+            --host 0.0.0.0 --port 3013 > fastapi.log 2>&1 &
         EOF
