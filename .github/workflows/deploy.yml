@@ -27,11 +27,12 @@ jobs:
     - name: Deploy and Run FastAPI
       run: |
         ssh -o StrictHostKeyChecking=no gerardo@jquiroz.net << 'EOF'
-          cd /home/gerardo/DespliegueContinuo/productos-fastapi/productos-fastapi/app
+          cd /home/gerardo/DespliegueContinuo/productos-fastapi/productos-fastapi
           git pull origin master
+
           source /home/gerardo/productos-api/entorno/bin/activate
-          pip install -r requeriments.txt || pip install fastapi uvicorn
+          pip install -r requirements.txt || pip install fastapi uvicorn
 
           fuser -k 3013/tcp || true
-          nohup /home/gerardo/productos-api/entorno/bin/uvicorn main:app --host 0.0.0.0 --port 3013 > fastapi.log 2>&1 &
+          nohup /home/gerardo/productos-api/entorno/bin/uvicorn app.main:app --host 0.0.0.0 --port 3013 > fastapi.log 2>&1 &
         EOF
