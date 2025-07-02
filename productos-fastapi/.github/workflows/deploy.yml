@@ -27,7 +27,7 @@ jobs:
     - name: Deploy and Run FastAPI
       run: |
         ssh -o StrictHostKeyChecking=no gerardo@jquiroz.net << 'EOF'
-          cd /home/gerardo/pruebasalv/copiaCalculadora
+          cd /home/gerardo/DespliegueContinuo/productos-fastapi/productos-fastapi
           git pull origin master
           source /home/gerardo/productos-api/entorno/bin/activate
           pip install -r requeriments.txt || pip install fastapi uvicorn
