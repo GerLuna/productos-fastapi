@@ -1,6 +1,6 @@
 from typing import List, Optional
-from .models import Producto
-from .schemas import ProductoCrear
+from app.models import Producto
+from app.schemas import ProductoCrear
 
 productos: List[Producto] = []
 contador_id = 1
